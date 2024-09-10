@@ -44,12 +44,22 @@
 			);
 			target = 6F69D3C82C788B8A00494942 /* Tracker */;
 		};
+		6F69D4422C903B7700494942 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Tracker.swift,
+				TrackerCategory.swift,
+				TrackerRecord.swift,
+			);
+			target = 6F69D3C82C788B8A00494942 /* Tracker */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		6F69D3E02C788C3E00494942 /* Resources */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (6F69D3E12C788C4700494942 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Resources; sourceTree = "<group>"; };
 		6F69D3EA2C7CB6FF00494942 /* Trackers */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (6F69D3ED2C7CB72600494942 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Trackers; sourceTree = "<group>"; };
 		6F69D3EC2C7CB70B00494942 /* Statistics */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (6F69D3F82C7CB87800494942 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Statistics; sourceTree = "<group>"; };
+		6F69D43F2C903B5B00494942 /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (6F69D4422C903B7700494942 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +95,7 @@
 				6F69D3CC2C788B8A00494942 /* AppDelegate.swift */,
 				6F69D3CE2C788B8A00494942 /* SceneDelegate.swift */,
 				6F69D3F32C7CB7E300494942 /* TabBarController.swift */,
+				6F69D43F2C903B5B00494942 /* Models */,
 				6F69D3EA2C7CB6FF00494942 /* Trackers */,
 				6F69D3EC2C7CB70B00494942 /* Statistics */,
 				6F69D3E02C788C3E00494942 /* Resources */,

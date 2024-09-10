@@ -2,6 +2,9 @@ import UIKit
 
 final class TrackersViewController: UIViewController {
     
+    var categories: [TrackerCategory] = []
+    var completedTrackers: [TrackerRecord] = []
+    
     private lazy var mainStackView: UIStackView = {
         let element = UIStackView()
         element.axis = .vertical
