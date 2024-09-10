@@ -42,10 +42,12 @@ final class TrackersViewController: UIViewController {
         return element
     }()
     
-    private lazy var scrollView: UIScrollView = {
-        let element = UIScrollView()
-        
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        let element = UICollectionView(frame: .zero, collectionViewLayout: layout)
         element.translatesAutoresizingMaskIntoConstraints = false
+        element.backgroundColor = .white // Устанавливаем фон для тестов
         return element
     }()
     
@@ -68,9 +70,7 @@ final class TrackersViewController: UIViewController {
         return element
     }()
     
-    
-    
-    // MARK: - UI and Lyfe Cycle
+    // MARK: - UI and Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +80,13 @@ final class TrackersViewController: UIViewController {
         
         setupNavigationBar()
         showStub()
+        
+        collectionView.register(
+            TrackerCell.self,
+            forCellWithReuseIdentifier: TrackerCell.identifier
+        )
+        collectionView.dataSource = self
+        collectionView.delegate = self
     }
     
     private func setupNavigationBar() {
@@ -94,24 +101,27 @@ final class TrackersViewController: UIViewController {
         addButton.tintColor = .blackYPDay
         
         navigationItem.leftBarButtonItem = addButton
+        
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        datePicker.locale = Locale(identifier: "ru_RU")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
     }
-    
-
     
     @objc private func addTrackerTapped() {
         print("Добавить трекер")
     }
     
     private func showStub() {
-        stubStackView.isHidden = false
+        stubStackView.isHidden = true
     }
     
     private func setView() {
         view.addSubview(mainStackView)
         mainStackView.addArrangedSubview(titleLabel)
         mainStackView.addArrangedSubview(searchBar)
-        mainStackView.addArrangedSubview(scrollView)
-        scrollView.addSubview(stubStackView)
+        mainStackView.addArrangedSubview(collectionView)
+        collectionView.addSubview(stubStackView)
         stubStackView.addArrangedSubview(stubImage)
         stubStackView.addArrangedSubview(stubLabel)
     }
@@ -119,6 +129,51 @@ final class TrackersViewController: UIViewController {
     // MARK: - Actions
     
 }
+
+
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
+
+extension TrackersViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCell.identifier, for: indexPath) as? TrackerCell else {
+            return UICollectionViewCell()
+        }
+        
+//        cell.backgroundColor = .red
+        return cell
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    // Настройка размера ячеек
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let spacing: CGFloat = 9
+        let numberOfItemsPerRow: CGFloat = 2
+        let totalSpacing = (numberOfItemsPerRow - 1) * spacing
+        let availableWidth = collectionView.frame.width - totalSpacing
+        let width = availableWidth / numberOfItemsPerRow
+        
+        return CGSize(width: width, height: 148)
+    }
+    
+    // Настройка горизонтальных отступов
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 9
+    }
+    
+    // Настройка вертикальных отступов
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0 
+    }
+}
+
 
 // MARK: - Constraints
 
@@ -136,14 +191,17 @@ extension TrackersViewController {
             
             searchBar.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 7),
             
-            stubStackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            stubStackView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
-            stubStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            stubStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            collectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 10),
+            collectionView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: mainStackView.bottomAnchor),
+            
+            stubStackView.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+            stubStackView.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
+            stubStackView.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor),
+            stubStackView.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor),
             stubImage.widthAnchor.constraint(equalToConstant: 80),
             stubImage.heightAnchor.constraint(equalToConstant: 80),
-                    
         ])
     }
 }
-

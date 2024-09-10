@@ -33,6 +33,7 @@
 		6F69D3ED2C7CB72600494942 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				TrackerCell.swift,
 				TrackersViewController.swift,
 			);
 			target = 6F69D3C82C788B8A00494942 /* Tracker */;
